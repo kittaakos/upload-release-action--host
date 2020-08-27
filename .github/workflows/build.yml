@@ -1,0 +1,23 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Publish binaries
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Upload binaries to release
+      uses: kittaakos/upload-release-action@GH-24--custom-owner-repo
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: foo.txt
+        asset_name: mything
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "This is my release text"
