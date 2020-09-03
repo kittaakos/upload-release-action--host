@@ -12,12 +12,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Get Tag
+      id: tag_name
+      run: |
+        echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+
     - name: Upload binaries to release
       uses: kittaakos/upload-release-action@dev
       with:
         repo_token: ${{ secrets.YOUR_PERSONAL_ACCESS_TOKEN }}
         repo_name: kittaakos/upload-release-action--target
-        release_name: ${{ github.event.release.tag_name }}
+        release_name: ${{ steps.tag_name.outputs.TAG_NAME }}
         file: assets/*
         tag: ${{ github.ref }}
         file_glob: true
