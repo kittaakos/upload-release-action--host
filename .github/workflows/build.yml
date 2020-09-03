@@ -13,12 +13,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Upload binaries to release
-      uses: kittaakos/upload-release-action@GH-24--custom-owner-repo
+      uses: kittaakos/upload-release-action@dev
       with:
         repo_token: ${{ secrets.YOUR_PERSONAL_ACCESS_TOKEN }}
         repo_name: kittaakos/upload-release-action--target
-        file: foo.txt
-        asset_name: mything
+        release_name: ${{ github.event.release.tag_name }}
+        file: assets/*
         tag: ${{ github.ref }}
-        overwrite: true
-        body: "This is my release text"
+        file_glob: true
+        body: "release body content"
